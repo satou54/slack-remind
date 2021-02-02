@@ -9,12 +9,10 @@
       <button @click="meButton">me</button>
       <br>
       <input type="text" id="address" placeholder="対象" v-model="address">
-      <p>{{ addressTest }}</p>
     </div>
     <div>
       <h2>メッセージ</h2>
       <input type="text" id="message" placeholder="内容" v-model="message">
-      <p>{{ messageTest }}</p>
     </div>
     <div>
         <h2>リマインド</h2>
@@ -26,20 +24,20 @@
         <div class="tab_content" id="all_content">
           <div class="tab_content_description">
             <h2>間隔</h2>
-            <select>
-              <option value="#">毎日</option>
-              <option value="#">毎週</option>
-              <option value="#">隔週</option>
-              <option value="#">毎月</option>
-              <option value="#">毎年</option>
+            <select v-model="interval">
+              <option value="everyday">毎日</option>
+              <option value="毎週">毎週</option>
+              <option value="隔週">隔週</option>
+              <option value="毎月">毎月</option>
+              <option value="毎年">毎年</option>
             </select>
             <h2>時間</h2>
-            <select>
-              <option value="#">午前</option>
-              <option value="#">午後</option>
+            <select v-model="morningAfternoon">
+              <option value="am">午前</option>
+              <option value="pm">午後</option>
             </select>
-            <input placeholder="00時">
-            <input placeholder="00分">
+            <input v-model="hour" placeholder="00時">
+            <input v-model="minutue" placeholder="00分">
           </div>
         </div>
         <div class="tab_content" id="programming_content">
@@ -53,17 +51,18 @@
               <option value="#">毎年</option>
             </select>
             <h2>時間</h2>
-            <select>
-              <option value="#">午前</option>
-              <option value="#">午後</option>
+            <select v-model="morningAfternoon">
+              <option value="am">午前</option>
+              <option value="pm">午後</option>
             </select>
-            <input placeholder="00時">
-            <input placeholder="00分">
+            <input v-model="hour" placeholder="00時">
+            <input v-model="minutue" placeholder="00分">
           </div>
         </div>
       </div>
     </div>
-    <button id="create">生成</button>
+    <button id="create" @click="createButton">生成</button>
+    <p>{{ command }}</p>
     <div>
       <h3>Slack command</h3>
       <input id="slack_command" placeholder="Slack command">
@@ -76,7 +75,12 @@ export default {
   data: function () {
     return {
       address: '',
-      message: ''
+      message: '',
+      interval: '',
+      morningAfternoon: '',
+      hour: '',
+      minutue: '',
+      command: ''
     }
   },
   methods: {
@@ -88,6 +92,9 @@ export default {
     },
     meButton: function () {
       this.address = '@me'
+    },
+    createButton: function () {
+      this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval
     }
   },
   computed: {
@@ -96,6 +103,18 @@ export default {
     },
     messageTest: function () {
       return this.message
+    },
+    selectedRemind: function () {
+      return this.interval
+    },
+    selectedMorningAfternoon: function () {
+      return this.morningAfternoon
+    },
+    hourTest: function () {
+      return this.hour
+    },
+    minutueTest: function () {
+      return this.minutue
     }
   }
 }
