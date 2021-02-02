@@ -8,7 +8,7 @@
       <button>@someone</button>
       <button>me</button>
       <br>
-      <input placeholder="対象">
+      <input id="address" placeholder="対象">
     </div>
     <div>
       <h2>メッセージ</h2>
@@ -61,10 +61,10 @@
         </div>
       </div>
     </div>
-    <button>生成</button>
+    <button id="create">生成</button>
     <div>
-      <h3>slack command</h3>
-      <input >
+      <h3>Slack command</h3>
+      <input id="slack_command" placeholder="Slack command">
     </div>
   </div>
 </template>
@@ -79,6 +79,10 @@ export default {
 .container {
   border: 2px solid #000;
   margin: 50px;
+}
+
+#address {
+  margin-top: 10px;
 }
 
 /*タブ切り替え全体のスタイル*/
@@ -134,5 +138,13 @@ input[name="tab_item"] {
 .tabs input:checked + .tab_item {
   background-color: #5ab4bd;
   color: #fff;
+}
+
+#create {
+  margin-top: 20px;
+}
+
+#slack_command {
+  margin-bottom: 30px;
 }
 </style>
