@@ -4,11 +4,12 @@
     <p>Slackのremindコマンドを生成することができます。</p>
     <div>
       <h2>宛先</h2>
-      <button>#channel</button>
-      <button>@someone</button>
-      <button>me</button>
+      <button @click="channelButton">#channel</button>
+      <button @click="someoneButton">@someone</button>
+      <button @click="meButton">me</button>
       <br>
-      <input id="address" placeholder="対象">
+      <input type="text" id="address" placeholder="対象" v-model="address">
+      <p>{{ test }}</p>
     </div>
     <div>
       <h2>メッセージ</h2>
@@ -70,8 +71,28 @@
 </template>
 
 <script>
-
 export default {
+  data: function () {
+    return {
+      address: ''
+    }
+  },
+  methods: {
+    channelButton: function () {
+      this.address = '#channel'
+    },
+    someoneButton: function () {
+      this.address = '@someone'
+    },
+    meButton: function () {
+      this.address = '@me'
+    }
+  },
+  computed: {
+    test: function () {
+      return this.address
+    }
+  }
 }
 </script>
 
