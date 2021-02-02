@@ -9,11 +9,12 @@
       <button @click="meButton">me</button>
       <br>
       <input type="text" id="address" placeholder="対象" v-model="address">
-      <p>{{ test }}</p>
+      <p>{{ addressTest }}</p>
     </div>
     <div>
       <h2>メッセージ</h2>
       <input type="text" id="message" placeholder="内容" v-model="message">
+      <p>{{ messageTest }}</p>
     </div>
     <div>
         <h2>リマインド</h2>
@@ -90,8 +91,11 @@ export default {
     }
   },
   computed: {
-    test: function () {
+    addressTest: function () {
       return this.address
+    },
+    messageTest: function () {
+      return this.message
     }
   }
 }
