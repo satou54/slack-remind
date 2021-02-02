@@ -13,7 +13,7 @@
     </div>
     <div>
       <h2>メッセージ</h2>
-      <input placeholder="内容">
+      <input type="text" id="message" placeholder="内容" v-model="message">
     </div>
     <div>
         <h2>リマインド</h2>
@@ -74,7 +74,8 @@
 export default {
   data: function () {
     return {
-      address: ''
+      address: '',
+      message: ''
     }
   },
   methods: {
