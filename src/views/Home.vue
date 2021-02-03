@@ -56,7 +56,7 @@
         <div class="tab_content" id="programming_content">
           <div class="tab_content_description">
             <h2>間隔</h2>
-            <input type="date">
+            <input type="date" v-model="date">
             <h2>時間</h2>
             <select v-model="morningAfternoon">
               <option value="am">午前</option>
@@ -88,6 +88,7 @@ export default {
       morningAfternoon: '',
       hour: '',
       minutue: '',
+      date: '',
       command: ''
     }
   },
@@ -143,24 +144,6 @@ export default {
     }
   },
   computed: {
-    addressTest: function () {
-      return this.address
-    },
-    messageTest: function () {
-      return this.message
-    },
-    selectedRemind: function () {
-      return this.interval
-    },
-    selectedMorningAfternoon: function () {
-      return this.morningAfternoon
-    },
-    hourTest: function () {
-      return this.hour
-    },
-    minutueTest: function () {
-      return this.minutue
-    }
   }
 }
 </script>
