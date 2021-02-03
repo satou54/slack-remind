@@ -25,13 +25,25 @@
         <div class="tab_content" id="all_content">
           <div class="tab_content_description">
             <h2>間隔</h2>
-            <select v-model="interval">
-              <option value="everyday">毎日</option>
+            <select v-model="interval" @change="selectChange" name="selectInterval">
+              <option value="毎日">毎日</option>
               <option value="毎週">毎週</option>
               <option value="隔週">隔週</option>
               <option value="毎月">毎月</option>
               <option value="毎年">毎年</option>
             </select>
+            <div class="display_none" id="every_week">
+              <p>毎週</p>
+            </div>
+            <div class="display_none" id="every_other_week">
+              <p>隔週</p>
+            </div>
+            <div class="display_none" id="every_month">
+              <p>毎月</p>
+            </div>
+            <div class="display_none" id="every_year">
+              <p>毎年</p>
+            </div>
             <h2>時間</h2>
             <select v-model="morningAfternoon">
               <option value="am">午前</option>
@@ -96,6 +108,38 @@ export default {
     },
     createButton: function () {
       this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval
+    },
+    // リストで選択された値に応じて要素を表示する
+    selectChange: function () {
+      if (this.interval === '毎日') {
+        this.displayHide()
+      } else if (this.interval === '毎週') {
+        this.displayChange('#every_week')
+      } else if (this.interval === '隔週') {
+        this.displayChange('#every_other_week')
+      } else if (this.interval === '毎月') {
+        this.displayChange('#every_month')
+      } else if (this.interval === '毎年') {
+        this.displayChange('#every_year')
+      }
+    },
+    // 引数に指定された要素を表示する
+    displayChange: function (id) {
+      this.displayHide()
+
+      var el = document.querySelector(id)
+      el.classList.remove('display_none')
+      el.classList.add('display_show')
+    },
+    // 既にリストで値が選択され表示されている要素が存在する場合、非表示にする
+    displayHide: function () {
+      if (document.querySelector('.display_show')) {
+        // display_showクラスを持つ要素のidを取得し#idの形にする
+        var displayShowId = '#' + document.querySelector('.display_show').getAttribute('id')
+        var displayShowElement = document.querySelector(displayShowId)
+        displayShowElement.classList.remove('display_show')
+        displayShowElement.classList.add('display_none')
+      }
     }
   },
   computed: {
@@ -189,6 +233,14 @@ input[name="tab_item"] {
 .tabs input:checked + .tab_item {
   background-color: #5ab4bd;
   color: #fff;
+}
+
+.display_show {
+  display: block;
+}
+
+.display_none {
+  display: none;
 }
 
 #hour {
