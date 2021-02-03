@@ -19,9 +19,9 @@
         <h2>リマインド</h2>
       <div class="tabs">
         <input id="all" type="radio" name="tab_item" checked>
-        <label class="tab_item" for="all">繰り返し</label>
+        <label class="tab_item" for="all" @click="tabButton">繰り返し</label>
         <input id="programming" type="radio" name="tab_item">
-        <label class="tab_item" for="programming">1回のみ</label>
+        <label class="tab_item" for="programming" @click="tabButton">1回のみ</label>
         <div class="tab_content" id="all_content">
           <div class="tab_content_description">
             <h2>間隔</h2>
@@ -93,6 +93,10 @@ export default {
     }
   },
   methods: {
+    tabButton: function () {
+      this.interval = ''
+      this.date = ''
+    },
     channelButton: function () {
       this.symbol = '#'
       this.target = 'channel'
@@ -108,7 +112,7 @@ export default {
       this.address = 'me'
     },
     createButton: function () {
-      this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval
+      this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval + this.date
     },
     // リストで選択された値に応じて要素を表示する
     selectChange: function () {
