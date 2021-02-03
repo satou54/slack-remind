@@ -173,22 +173,21 @@ export default {
   padding-bottom: 40px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 700px;
+  width: auto;
   margin: 0 auto;}
 
 /*タブのスタイル*/
 .tab_item {
-  width: calc(100%/3);
-  height: 50px;
-  border-bottom: 3px solid #5ab4bd;
+  width: calc(100%/5);
+  height: 40px;
   background-color: #d9d9d9;
-  line-height: 50px;
+  border-bottom: 3px solid #5ab4bd;
+  line-height: 47px;
   font-size: 16px;
   text-align: center;
   color: #565656;
   display: block;
   float: left;
-  text-align: center;
   font-weight: bold;
   transition: all 0.2s ease;
 }
