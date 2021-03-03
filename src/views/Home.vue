@@ -4,9 +4,9 @@
     <p>Slackのremindコマンドを生成することができます。</p>
     <div>
       <h2>宛先</h2>
-      <button @click="channelButton">#channel</button>
-      <button @click="someoneButton">@someone</button>
-      <button @click="meButton">me</button>
+      <button class="btn btn-primary mr-1" @click="channelButton">#channel</button>
+      <button class="btn btn-primary mr-1" @click="someoneButton">@someone</button>
+      <button class="btn btn-primary mr-1" @click="meButton">me</button>
       <br>
       <input type="text" id="symbol" v-model="symbol" readonly>
       <input type="text" id="address" v-bind:placeholder="target" v-model="address">
@@ -25,7 +25,7 @@
         <div class="tab_content" id="all_content">
           <div class="tab_content_description">
             <h2>間隔</h2>
-            <select v-model="interval" @change="selectChange" name="selectInterval">
+            <select v-model="selectInterval" @change="selectChange" name="selectInterval">
               <option value="毎日">毎日</option>
               <option value="毎週">毎週</option>
               <option value="隔週">隔週</option>
@@ -68,7 +68,7 @@
         </div>
       </div>
     </div>
-    <button id="create" @click="createButton">生成</button>
+    <button class="btn btn-primary" id="create" @click="createButton">生成</button>
     <div>
       <h3>Slack command</h3>
       <input id="slack_command" placeholder="Slack command" v-bind:value="command">
@@ -84,6 +84,7 @@ export default {
       target: '',
       address: '',
       message: '',
+      selectInterval: '',
       interval: '',
       morningAfternoon: '',
       hour: '',
@@ -116,16 +117,21 @@ export default {
     },
     // リストで選択された値に応じて要素を表示する
     selectChange: function () {
-      if (this.interval === '毎日') {
+      if (this.selectInterval === '毎日') {
         this.displayHide()
-      } else if (this.interval === '毎週') {
+        this.interval = 'everyday'
+      } else if (this.selectInterval === '毎週') {
         this.displayChange('#every_week')
-      } else if (this.interval === '隔週') {
+        this.interval = 'on every weekday'
+      } else if (this.selectInterval === '隔週') {
         this.displayChange('#every_other_week')
-      } else if (this.interval === '毎月') {
+        this.interval = 'every other'
+      } else if (this.selectInterval === '毎月') {
         this.displayChange('#every_month')
-      } else if (this.interval === '毎年') {
+        this.interval = 'every month'
+      } else if (this.selectInterval === '毎年') {
         this.displayChange('#every_year')
+        this.interval = 'every year'
       }
     },
     // 引数に指定された要素を表示する
