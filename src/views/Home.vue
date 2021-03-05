@@ -24,7 +24,7 @@
     </div>
     <div>
         <h2>リマインド</h2>
-      <div class="tabs">
+      <div class="tabs col-10">
         <input id="all" type="radio" name="tab_item" checked>
         <label class="tab_item" for="all" @click="tabButton">繰り返し</label>
         <input id="programming" type="radio" name="tab_item">
@@ -84,8 +84,8 @@
               <option value="am">午前</option>
               <option value="pm">午後</option>
             </select>
-            <input v-model="hour" id="hour" placeholder="00時">
-            <input v-model="minutue" id="minute" placeholder="00分">
+            <input v-model="hour" placeholder="00時">
+            <input v-model="minutue" placeholder="00分">
           </div>
         </div>
         <div class="tab_content" id="programming_content">
@@ -107,7 +107,7 @@
     <div>
       <h3>Slack command</h3>
       <input id="slack_command" placeholder="Slack command" v-bind:value="command">
-      <button @click="copyToClipboard">copy</button>
+      <button class="btn" @click="copyToClipboard">copy</button>
     </div>
   </div>
 </template>
@@ -326,8 +326,12 @@ export default {
 </script>
 
 <style scoped>
+body {
+  background: #340c34;
+}
+
 .container {
-  border: 2px solid #000;
+  border: 2px solid #5ab4bd;
   margin: 50px;
 }
 
@@ -338,6 +342,17 @@ export default {
 
 #address {
   margin-top: 10px;
+}
+
+.btn {
+  background-color: #5ab4bd;
+  color: #fff;
+  border: none;
+}
+
+.btn:hover {
+  background-color: #5ab4bd;
+  opacity: 0.75;
 }
 
 /*タブ切り替え全体のスタイル*/
