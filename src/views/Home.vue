@@ -39,7 +39,6 @@
               <option value="毎月">毎月</option>
               <option value="毎年">毎年</option>
             </select>
-            <p>{{ selectedWeekOfDays }}</p>
             <div class="display_none from-group" id="every_week">
               <p>毎週</p>
               <div>
@@ -62,12 +61,13 @@
               <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay form-check form-check-inline">
                 <input
                   class="form-check-input"
-                  :id="'weekOfDay' + i"
-                  name="weekOfDaysOptions"
+                  :id="'weekOfDayOption' + i"
+                  name="weekOfDayOption"
                   type="radio"
                   :value="weekOfDay"
+                  v-model="selectedWeekOfDay"
                 >
-                <label class="form-check-label" :for="'weekOfDay' + i">{{ weekOfDay }}</label>
+                <label class="form-check-label" :for="'weekOfDayOption' + i">{{ weekOfDay }}</label>
               </div>
             </div>
             <div class="display_none" id="every_month">
@@ -122,6 +122,7 @@ export default {
       holidayFlg: false,
       weekOfDays: ['月', '火', '水', '木', '金', '土', '日'],
       selectedWeekOfDays: [],
+      selectedWeekOfDay: [],
       morningAfternoon: '',
       hour: '',
       minutue: '',
