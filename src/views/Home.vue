@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mx-auto">
     <h1>Slack remind自動生成サイト</h1>
     <p>Slackのremindコマンドを生成することができます。</p>
     <div>
@@ -8,12 +8,19 @@
       <button class="btn btn-primary mr-1" @click="someoneButton">@someone</button>
       <button class="btn btn-primary mr-1" @click="meButton">me</button>
       <br>
-      <input type="text" id="symbol" v-model="symbol" readonly>
-      <input type="text" id="address" v-bind:placeholder="target" v-model="address">
+      <div class="col-sm-3 my-1 mx-auto">
+        <label class="sr-only" for="inlineFormInputGroupUsername">宛先</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text" id="symbol">{{ symbol }}</div>
+          </div>
+          <input type="text" class="form-control" id="address" v-bind:placeholder="target" v-model="address">
+        </div>
+      </div>
     </div>
-    <div>
+    <div class="col-6 mx-auto">
       <h2>メッセージ</h2>
-      <input type="text" id="message" placeholder="内容" v-model="message">
+      <textarea class="form-control" id="message" rows="3" placeholder="内容" v-model="message"></textarea>
     </div>
     <div>
         <h2>リマインド</h2>
@@ -32,11 +39,67 @@
               <option value="毎月">毎月</option>
               <option value="毎年">毎年</option>
             </select>
-            <div class="display_none" id="every_week">
+            <div class="display_none from-group" id="every_week">
               <p>毎週</p>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="monday">
+                <label class="form-check-label" for="monday">月</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tuesday">
+                <label class="form-check-label" for="tuesday">火</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="wednesday">
+                <label class="form-check-label" for="wednesday">水</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="thursday">
+                <label class="form-check-label" for="thursday">木</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="friday">
+                <label class="form-check-label" for="friday">金</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="saturday">
+                <label class="form-check-label" for="saturday">土</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="sunday">
+                <label class="form-check-label" for="sunday">日</label>
+              </div>
             </div>
             <div class="display_none" id="every_other_week">
               <p>隔週</p>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="monday2">
+                <label class="form-check-label" for="monday2">月</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tuesday2">
+                <label class="form-check-label" for="tuesday2">火</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="wednesday2">
+                <label class="form-check-label" for="wednesday2">水</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="thursday2">
+                <label class="form-check-label" for="thursday2">木</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="friday2">
+                <label class="form-check-label" for="friday2">金</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="saturday2">
+                <label class="form-check-label" for="saturday2">土</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="sunday2">
+                <label class="form-check-label" for="sunday2">日</label>
+              </div>
             </div>
             <div class="display_none" id="every_month">
               <p>毎月</p>
@@ -94,10 +157,6 @@ export default {
     }
   },
   methods: {
-    tabButton: function () {
-      this.interval = ''
-      this.date = ''
-    },
     channelButton: function () {
       this.symbol = '#'
       this.target = 'channel'
@@ -111,6 +170,10 @@ export default {
     meButton: function () {
       this.symbol = '@'
       this.address = 'me'
+    },
+    tabButton: function () {
+      this.interval = ''
+      this.date = ''
     },
     createButton: function () {
       this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval + this.date
