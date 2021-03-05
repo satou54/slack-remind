@@ -107,6 +107,7 @@
     <div>
       <h3>Slack command</h3>
       <input id="slack_command" placeholder="Slack command" v-bind:value="command">
+      <button @click="copyToClipboard">copy</button>
     </div>
   </div>
 </template>
@@ -312,6 +313,11 @@ export default {
     },
     changeDate: function () {
       this.interval = 'once'
+    },
+    copyToClipboard: function () {
+      var copyTarget = document.getElementById('slack_command')
+      copyTarget.select()
+      document.execCommand('Copy')
     }
   },
   computed: {
