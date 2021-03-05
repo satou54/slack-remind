@@ -72,23 +72,26 @@
             </div>
             <div class="display_none" id="every_month">
               <p>毎月</p>
+              <input v-model="day" id="day" placeholder="日付"><p style="display:inline;">日</p>
             </div>
             <div class="display_none" id="every_year">
               <p>毎年</p>
+              <input v-model="month" id="month" placeholder="月"><p style="display:inline;">月</p>
+              <input v-model="day" id="day" placeholder="日付"><p style="display:inline;">日</p>
             </div>
             <h2>時間</h2>
             <select v-model="morningAfternoon">
               <option value="am">午前</option>
               <option value="pm">午後</option>
             </select>
-            <input v-model.number="hour" id="hour" placeholder="00時">
+            <input v-model="hour" id="hour" placeholder="00時">
             <input v-model="minutue" id="minute" placeholder="00分">
           </div>
         </div>
         <div class="tab_content" id="programming_content">
           <div class="tab_content_description">
-            <h2>間隔</h2>
-            <input type="date" v-model="date">
+            <h2>日付</h2>
+            <input type="date" v-model="date" @change="changeDate">
             <h2>時間</h2>
             <select v-model="morningAfternoon">
               <option value="am">午前</option>
@@ -122,7 +125,9 @@ export default {
       holidayFlg: false,
       weekOfDays: ['月', '火', '水', '木', '金', '土', '日'],
       selectedWeekOfDays: [],
-      selectedWeekOfDay: [],
+      selectedWeekOfDay: '',
+      day: '',
+      month: '',
       morningAfternoon: '',
       hour: '',
       minutue: '',
@@ -150,7 +155,68 @@ export default {
       this.date = ''
     },
     createButton: function () {
-      this.command = '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval + this.date
+      this.command = this.createSlackCommand()
+    },
+    createSlackCommand: function () {
+      switch (this.interval) {
+        case 'every weekday':
+          if (this.selectedWeekOfDays.length === 7) {
+            this.interval = 'on every weekday'
+          } else {
+            console.log('else')
+            this.interval = 'on every'
+            for (var i = 0; i < this.selectedWeekOfDays.length; i++) {
+              this.interval += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDays[i]) + ','
+            }
+            this.interval.slice(0, -1)
+          }
+          console.log(this.interval)
+          break
+        case 'every other':
+          this.interval += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDay)
+          break
+        case 'every month':
+          this.interval = 'on ' + this.day + ' every month'
+          break
+        case 'every year':
+          if (this.month.length === 1) {
+            this.month = 0 + this.month
+          }
+          if (this.day.length === 1) {
+            this.day = 0 + this.day
+          }
+          this.interval = 'on ' + this.month + '-' + this.day + ' every year'
+          break
+        case 'once':
+          this.interval = 'on ' + this.date
+          break
+      }
+      if (this.hour.length === 1) {
+        this.hour = 0 + this.hour
+      }
+      if (this.minutue.length === 1) {
+        this.minutue = 0 + this.minutue
+      }
+
+      return '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval
+    },
+    weekOfDaysReplace: function (weekOfDay) {
+      switch (weekOfDay) {
+        case '月':
+          return 'Monday'
+        case '火':
+          return 'Tuesday'
+        case '水':
+          return 'Wednesday'
+        case '木':
+          return 'Thursday'
+        case '金':
+          return 'Friday'
+        case '土':
+          return 'Saturday'
+        case '日':
+          return 'Sunday'
+      }
     },
     // リストで選択された値に応じて要素を表示する
     selectChange: function () {
@@ -160,7 +226,7 @@ export default {
         this.interval = 'everyday'
       } else if (this.selectInterval === '毎週') {
         this.displayChange('#every_week')
-        this.interval = 'on every weekday'
+        this.interval = 'every weekday'
       } else if (this.selectInterval === '隔週') {
         this.displayChange('#every_other_week')
         this.interval = 'every other'
@@ -243,6 +309,9 @@ export default {
         }
       })
       return newArray
+    },
+    changeDate: function () {
+      this.interval = 'once'
     }
   },
   computed: {
