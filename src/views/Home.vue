@@ -39,6 +39,7 @@
               <option value="毎月">毎月</option>
               <option value="毎年">毎年</option>
             </select>
+            <p>{{ selectedWeekOfDays }}</p>
             <div class="display_none from-group" id="every_week">
               <p>毎週</p>
               <div>
@@ -58,15 +59,15 @@
             </div>
             <div class="display_none" id="every_other_week">
               <p>隔週</p>
-              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay">
+              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay form-check form-check-inline">
                 <input
+                  class="form-check-input"
                   :id="'weekOfDay' + i"
-                  type="checkbox"
-                  class="checkbox-inline"
+                  name="weekOfDaysOptions"
+                  type="radio"
                   :value="weekOfDay"
-                  v-model="selectedWeekOfDays"
                 >
-                <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
+                <label class="form-check-label" :for="'weekOfDay' + i">{{ weekOfDay }}</label>
               </div>
             </div>
             <div class="display_none" id="every_month">
@@ -80,7 +81,7 @@
               <option value="am">午前</option>
               <option value="pm">午後</option>
             </select>
-            <input v-model="hour" id="hour" placeholder="00時">
+            <input v-model.number="hour" id="hour" placeholder="00時">
             <input v-model="minutue" id="minute" placeholder="00分">
           </div>
         </div>
@@ -152,6 +153,7 @@ export default {
     },
     // リストで選択された値に応じて要素を表示する
     selectChange: function () {
+      this.selectedWeekOfDays = []
       if (this.selectInterval === '毎日') {
         this.displayHide()
         this.interval = 'everyday'
@@ -193,6 +195,7 @@ export default {
       const wednesday = document.getElementById('weekOfDay2')
       const thursday = document.getElementById('weekOfDay3')
       const friday = document.getElementById('weekOfDay4')
+      var ordinaryDays = ['月', '火', '水', '木', '金']
 
       if (!this.ordinaryDaysFlg) {
         this.ordinaryDaysFlg = true
@@ -201,6 +204,7 @@ export default {
         wednesday.checked = true
         thursday.checked = true
         friday.checked = true
+        Array.prototype.push.apply(this.selectedWeekOfDays, ordinaryDays)
       } else {
         this.ordinaryDaysFlg = false
         monday.checked = false
@@ -208,21 +212,36 @@ export default {
         wednesday.checked = false
         thursday.checked = false
         friday.checked = false
+        this.selectedWeekOfDays = this.remodeArray(this.selectedWeekOfDays, ['土', '日'])
       }
     },
     setHolidaty: function () {
       const saturday = document.getElementById('weekOfDay5')
       const sunday = document.getElementById('weekOfDay6')
+      var holiday = ['土', '日']
 
       if (!this.holidayFlg) {
         this.holidayFlg = true
         saturday.checked = true
         sunday.checked = true
+        Array.prototype.push.apply(this.selectedWeekOfDays, holiday)
       } else {
         this.holidayFlg = false
         saturday.checked = false
         sunday.checked = false
+        this.selectedWeekOfDays = this.remodeArray(this.selectedWeekOfDays, ['月', '火', '水', '木', '金'])
       }
+    },
+    remodeArray: function (array, removeArray) {
+      var newArray = []
+      array = array.filter(function (value) {
+        for (var i = 0; i < removeArray.length; i++) {
+          if (value === removeArray[i]) {
+            newArray.push(value)
+          }
+        }
+      })
+      return newArray
     }
   },
   computed: {
