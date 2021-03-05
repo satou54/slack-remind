@@ -41,9 +41,14 @@
             </select>
             <div class="display_none from-group" id="every_week">
               <p>毎週</p>
+              <div>
+                <button class="btn btn-primary" @click="setOrdinaryDays">平日</button>
+                <button class="btn btn-primary" @click="setHolidaty">土日</button>
+              </div>
               <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay">
                 <input
                   :id="'weekOfDay' + i"
+                  :name="'weekOfDay' + i"
                   type="checkbox"
                   :value="weekOfDay"
                   v-model="selectedWeekOfDays"
@@ -112,6 +117,8 @@ export default {
       message: '',
       selectInterval: '',
       interval: '',
+      ordinaryDaysFlg: false,
+      holidayFlg: false,
       weekOfDays: ['月', '火', '水', '木', '金', '土', '日'],
       selectedWeekOfDays: [],
       morningAfternoon: '',
@@ -178,6 +185,43 @@ export default {
         var displayShowElement = document.querySelector(displayShowId)
         displayShowElement.classList.remove('display_show')
         displayShowElement.classList.add('display_none')
+      }
+    },
+    setOrdinaryDays: function () {
+      const monday = document.getElementById('weekOfDay0')
+      const tuesday = document.getElementById('weekOfDay1')
+      const wednesday = document.getElementById('weekOfDay2')
+      const thursday = document.getElementById('weekOfDay3')
+      const friday = document.getElementById('weekOfDay4')
+
+      if (!this.ordinaryDaysFlg) {
+        this.ordinaryDaysFlg = true
+        monday.checked = true
+        tuesday.checked = true
+        wednesday.checked = true
+        thursday.checked = true
+        friday.checked = true
+      } else {
+        this.ordinaryDaysFlg = false
+        monday.checked = false
+        tuesday.checked = false
+        wednesday.checked = false
+        thursday.checked = false
+        friday.checked = false
+      }
+    },
+    setHolidaty: function () {
+      const saturday = document.getElementById('weekOfDay5')
+      const sunday = document.getElementById('weekOfDay6')
+
+      if (!this.holidayFlg) {
+        this.holidayFlg = true
+        saturday.checked = true
+        sunday.checked = true
+      } else {
+        this.holidayFlg = false
+        saturday.checked = false
+        sunday.checked = false
       }
     }
   },
