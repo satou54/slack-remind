@@ -72,12 +72,12 @@
             </div>
             <div class="display_none" id="every_month">
               <p>毎月</p>
-              <input v-model="day" id="day" placeholder="日付"><p style="display:inline;">日</p>
+              <input v-model="day" placeholder="日付"><p style="display:inline;">日</p>
             </div>
             <div class="display_none" id="every_year">
               <p>毎年</p>
-              <input v-model="month" id="month" placeholder="月"><p style="display:inline;">月</p>
-              <input v-model="day" id="day" placeholder="日付"><p style="display:inline;">日</p>
+              <input v-model="month" placeholder="月"><p style="display:inline;">月</p>
+              <input v-model="day" placeholder="日付"><p style="display:inline;">日</p>
             </div>
             <h2>時間</h2>
             <select v-model="morningAfternoon">
@@ -158,25 +158,25 @@ export default {
       this.command = this.createSlackCommand()
     },
     createSlackCommand: function () {
+      var command
+
       switch (this.interval) {
         case 'every weekday':
           if (this.selectedWeekOfDays.length === 7) {
-            this.interval = 'on every weekday'
+            command = 'on every weekday'
           } else {
-            console.log('else')
-            this.interval = 'on every'
+            command = 'on every'
             for (var i = 0; i < this.selectedWeekOfDays.length; i++) {
-              this.interval += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDays[i]) + ','
+              command += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDays[i]) + ','
             }
-            this.interval.slice(0, -1)
+            command.slice(0, -1)
           }
-          console.log(this.interval)
           break
         case 'every other':
-          this.interval += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDay)
+          command = 'every other ' + this.weekOfDaysReplace(this.selectedWeekOfDay)
           break
         case 'every month':
-          this.interval = 'on ' + this.day + ' every month'
+          command = 'on ' + this.day + ' every month'
           break
         case 'every year':
           if (this.month.length === 1) {
@@ -185,10 +185,10 @@ export default {
           if (this.day.length === 1) {
             this.day = 0 + this.day
           }
-          this.interval = 'on ' + this.month + '-' + this.day + ' every year'
+          command = 'on ' + this.month + '-' + this.day + ' every year'
           break
         case 'once':
-          this.interval = 'on ' + this.date
+          command = 'on ' + this.date
           break
       }
       if (this.hour.length === 1) {
@@ -198,7 +198,7 @@ export default {
         this.minutue = 0 + this.minutue
       }
 
-      return '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + this.interval
+      return '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + command
     },
     weekOfDaysReplace: function (weekOfDay) {
       switch (weekOfDay) {
