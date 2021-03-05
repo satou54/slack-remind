@@ -41,64 +41,27 @@
             </select>
             <div class="display_none from-group" id="every_week">
               <p>毎週</p>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="monday">
-                <label class="form-check-label" for="monday">月</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="tuesday">
-                <label class="form-check-label" for="tuesday">火</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="wednesday">
-                <label class="form-check-label" for="wednesday">水</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="thursday">
-                <label class="form-check-label" for="thursday">木</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="friday">
-                <label class="form-check-label" for="friday">金</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="saturday">
-                <label class="form-check-label" for="saturday">土</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="sunday">
-                <label class="form-check-label" for="sunday">日</label>
+              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay">
+                <input
+                  :id="'weekOfDay' + i"
+                  type="checkbox"
+                  :value="weekOfDay"
+                  v-model="selectedWeekOfDays"
+                >
+                <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
               </div>
             </div>
             <div class="display_none" id="every_other_week">
               <p>隔週</p>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="monday2">
-                <label class="form-check-label" for="monday2">月</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="tuesday2">
-                <label class="form-check-label" for="tuesday2">火</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="wednesday2">
-                <label class="form-check-label" for="wednesday2">水</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="thursday2">
-                <label class="form-check-label" for="thursday2">木</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="friday2">
-                <label class="form-check-label" for="friday2">金</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="saturday2">
-                <label class="form-check-label" for="saturday2">土</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="sunday2">
-                <label class="form-check-label" for="sunday2">日</label>
+              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay">
+                <input
+                  :id="'weekOfDay' + i"
+                  type="checkbox"
+                  class="checkbox-inline"
+                  :value="weekOfDay"
+                  v-model="selectedWeekOfDays"
+                >
+                <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
               </div>
             </div>
             <div class="display_none" id="every_month">
@@ -149,6 +112,8 @@ export default {
       message: '',
       selectInterval: '',
       interval: '',
+      weekOfDays: ['月', '火', '水', '木', '金', '土', '日'],
+      selectedWeekOfDays: [],
       morningAfternoon: '',
       hour: '',
       minutue: '',
@@ -314,5 +279,9 @@ input[name="tab_item"] {
   margin-bottom: 30px;
   width: 400px;
   height: 30px;
+}
+
+.weekOfDay {
+  display: inline-block;
 }
 </style>
