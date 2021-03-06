@@ -50,7 +50,7 @@
               </select>
               <div class="display_none from-group mt-2" id="every_week">
                 <div class="mt-3">
-                  <button class="btn btn-primary" @click="setOrdinaryDays">平日</button>
+                  <button class="btn btn-primary mr-1" @click="setOrdinaryDays">平日</button>
                   <button class="btn btn-primary" @click="setHolidaty">土日</button>
                 </div>
                 <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay mt-3 mr-2">
