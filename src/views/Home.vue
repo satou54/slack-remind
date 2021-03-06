@@ -1,113 +1,142 @@
 <template>
   <div class="container mx-auto">
-    <h1>Slack remind自動生成サイト</h1>
-    <p>Slackのremindコマンドを生成することができます。</p>
-    <div>
-      <h2>宛先</h2>
-      <button class="btn btn-primary mr-1" @click="channelButton">#channel</button>
-      <button class="btn btn-primary mr-1" @click="someoneButton">@someone</button>
-      <button class="btn btn-primary mr-1" @click="meButton">me</button>
-      <br>
-      <div class="col-sm-3 my-1 mx-auto">
-        <label class="sr-only" for="inlineFormInputGroupUsername">宛先</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text" id="symbol">{{ symbol }}</div>
+    <div class="row">
+      <div class="col-10 mx-auto">
+        <h1>Slack remind自動生成サイト</h1>
+        <p>Slackのremindコマンドを生成することができます。</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="co-10 mx-auto">
+        <h2 class="mt-4">宛先</h2>
+        <button class="btn btn-primary mr-1" @click="channelButton">#channel</button>
+        <button class="btn btn-primary mr-1" @click="someoneButton">@someone</button>
+        <button class="btn btn-primary mr-1" @click="meButton">me</button>
+        <br>
+        <div class="col-10 my-1 mt-3 mx-auto">
+          <label class="sr-only" for="inlineFormInputGroupUsername">宛先</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text pr-3 pl-1" id="symbol">{{ symbol }}</div>
+            </div>
+            <input type="text" class="form-control" id="address" v-bind:placeholder="target" v-model="address">
           </div>
-          <input type="text" class="form-control" id="address" v-bind:placeholder="target" v-model="address">
         </div>
       </div>
     </div>
-    <div class="col-6 mx-auto">
-      <h2>メッセージ</h2>
-      <textarea class="form-control" id="message" rows="3" placeholder="内容" v-model="message"></textarea>
+    <div class="row">
+      <div class="col-7 mt-4 mx-auto">
+        <h2>メッセージ</h2>
+        <textarea class="form-control" id="message" rows="3" placeholder="内容" v-model="message"></textarea>
+      </div>
     </div>
-    <div>
+    <div class="row">
+      <div class="col-10 mt-4 mx-auto">
         <h2>リマインド</h2>
-      <div class="tabs col-10">
-        <input id="all" type="radio" name="tab_item" checked>
-        <label class="tab_item" for="all" @click="tabButton">繰り返し</label>
-        <input id="programming" type="radio" name="tab_item">
-        <label class="tab_item" for="programming" @click="tabButton">1回のみ</label>
-        <div class="tab_content" id="all_content">
-          <div class="tab_content_description">
-            <h2>間隔</h2>
-            <select v-model="selectInterval" @change="selectChange" name="selectInterval">
-              <option value="毎日">毎日</option>
-              <option value="毎週">毎週</option>
-              <option value="隔週">隔週</option>
-              <option value="毎月">毎月</option>
-              <option value="毎年">毎年</option>
-            </select>
-            <div class="display_none from-group" id="every_week">
-              <p>毎週</p>
-              <div>
-                <button class="btn btn-primary" @click="setOrdinaryDays">平日</button>
-                <button class="btn btn-primary" @click="setHolidaty">土日</button>
+        <div class="tabs col-10">
+          <input id="all" type="radio" name="tab_item" checked>
+          <label class="tab_item" for="all" @click="tabButton">繰り返し</label>
+          <input id="programming" type="radio" name="tab_item">
+          <label class="tab_item" for="programming" @click="tabButton">1回のみ</label>
+          <div class="tab_content" id="all_content">
+            <div class="tab_content_description">
+              <h2 class="mb-2">間隔</h2>
+              <select v-model="selectInterval" @change="selectChange" name="selectInterval" class="form-control col-3 mx-auto">
+                <option value="毎日">毎日</option>
+                <option value="毎週">毎週</option>
+                <option value="隔週">隔週</option>
+                <option value="毎月">毎月</option>
+                <option value="毎年">毎年</option>
+              </select>
+              <div class="display_none from-group mt-2" id="every_week">
+                <div class="mt-3">
+                  <button class="btn btn-primary" @click="setOrdinaryDays">平日</button>
+                  <button class="btn btn-primary" @click="setHolidaty">土日</button>
+                </div>
+                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay mt-3 mr-2">
+                  <input
+                    :id="'weekOfDay' + i"
+                    :name="'weekOfDay' + i"
+                    type="checkbox"
+                    :value="weekOfDay"
+                    v-model="selectedWeekOfDays"
+                  >
+                  <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
+                </div>
               </div>
-              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay">
-                <input
-                  :id="'weekOfDay' + i"
-                  :name="'weekOfDay' + i"
-                  type="checkbox"
-                  :value="weekOfDay"
-                  v-model="selectedWeekOfDays"
-                >
-                <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
+              <div class="display_none" id="every_other_week">
+                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay form-check form-check-inline mt-3">
+                  <input
+                    class="form-check-input"
+                    :id="'weekOfDayOption' + i"
+                    name="weekOfDayOption"
+                    type="radio"
+                    :value="weekOfDay"
+                    v-model="selectedWeekOfDay"
+                  >
+                  <label class="form-check-label" :for="'weekOfDayOption' + i">{{ weekOfDay }}</label>
+                </div>
+              </div>
+              <div class="display_none mt-3" id="every_month">
+                <div class="form-inline">
+                  <div class="mx-auto">
+                    <input v-model="day" class="form-control col-4 text-center" placeholder="Day">
+                    <p class="col-1 pl-1" style="display:inline;">日</p>
+                  </div>
+                </div>
+              </div>
+              <div class="display_none mt-3" id="every_year">
+                <div class="form-inline">
+                  <div class="mx-auto">
+                    <input v-model="month" class="form-control col-4 text-center" placeholder="Month"><p class="col-1 pl-1" style="display:inline;">月</p>
+                    <input v-model="day" class="form-control col-4 text-center" placeholder="Day"><p class="col-1 pl-1" style="display:inline;">日</p>
+                  </div>
+                </div>
+              </div>
+              <h2 class="mt-4">時間</h2>
+              <div class="form-inline">
+                <div class="mx-auto">
+                  <select v-model="morningAfternoon" class="form-control col-3 mr-1">
+                    <option class="form-control" value="am">午前</option>
+                    <option class="form-control" value="pm">午後</option>
+                  </select>
+                  <input v-model="hour" class="form-control col-3 mr-1 text-center" id="repeat-hour" placeholder="00時">
+                  <input v-model="minutue" class="form-control col-3 text-center" id="repeat-mimute" placeholder="00分">
+                </div>
               </div>
             </div>
-            <div class="display_none" id="every_other_week">
-              <p>隔週</p>
-              <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  :id="'weekOfDayOption' + i"
-                  name="weekOfDayOption"
-                  type="radio"
-                  :value="weekOfDay"
-                  v-model="selectedWeekOfDay"
-                >
-                <label class="form-check-label" :for="'weekOfDayOption' + i">{{ weekOfDay }}</label>
-              </div>
-            </div>
-            <div class="display_none" id="every_month">
-              <p>毎月</p>
-              <input v-model="day" placeholder="日付"><p style="display:inline;">日</p>
-            </div>
-            <div class="display_none" id="every_year">
-              <p>毎年</p>
-              <input v-model="month" placeholder="月"><p style="display:inline;">月</p>
-              <input v-model="day" placeholder="日付"><p style="display:inline;">日</p>
-            </div>
-            <h2>時間</h2>
-            <select v-model="morningAfternoon">
-              <option value="am">午前</option>
-              <option value="pm">午後</option>
-            </select>
-            <input v-model="hour" placeholder="00時">
-            <input v-model="minutue" placeholder="00分">
           </div>
-        </div>
-        <div class="tab_content" id="programming_content">
-          <div class="tab_content_description">
-            <h2>日付</h2>
-            <input type="date" v-model="date" @change="changeDate">
-            <h2>時間</h2>
-            <select v-model="morningAfternoon">
-              <option value="am">午前</option>
-              <option value="pm">午後</option>
-            </select>
-            <input v-model="hour" placeholder="00時">
-            <input v-model="minutue" placeholder="00分">
+          <div class="tab_content" id="programming_content">
+            <div class="tab_content_description">
+              <h2>日付</h2>
+              <input type="date" v-model="date" @change="changeDate" class="form-control col-6 mx-auto text-center">
+              <h2 class="mt-4">時間</h2>
+              <div class="form-inline">
+                <div class="mx-auto">
+                  <select v-model="morningAfternoon" class="form-control col-3 mr-1">
+                    <option value="am">午前</option>
+                    <option value="pm">午後</option>
+                  </select>
+                  <input v-model="hour" class="form-control col-3 mr-1 text-center" id="once-hour" placeholder="00時">
+                  <input v-model="minutue" class="form-control col-3 mr-1 text-center" id="once-mimute" placeholder="00分">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <button class="btn btn-primary" id="create" @click="createButton">生成</button>
-    <div>
-      <h3>Slack command</h3>
-      <input id="slack_command" placeholder="Slack command" v-bind:value="command">
-      <button class="btn" @click="copyToClipboard">copy</button>
+    <button class="btn btn-primary mt-4" id="create" @click="createButton">生成</button>
+    <div class="row">
+      <div class="col-10 mt-4 mb-5 mx-auto">
+        <h3>Slack command</h3>
+        <div class="form-inline">
+          <div class="mx-auto">
+            <input class="form-control col-8" id="slack_command" placeholder="Slack command" v-bind:value="command">
+            <button class="btn ml-1" @click="copyToClipboard">copy</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -340,10 +369,6 @@ body {
   background: #d4d4d4;
 }
 
-#address {
-  margin-top: 10px;
-}
-
 .btn {
   background-color: #5ab4bd;
   color: #fff;
@@ -391,7 +416,7 @@ input[name="tab_item"] {
 /*タブ切り替えの中身のスタイル*/
 .tab_content {
   display: none;
-  padding: 40px 40px 0;
+  padding: 20px 40px 0;
   clear: both;
   overflow: hidden;
 }
@@ -430,7 +455,8 @@ input[name="tab_item"] {
 }
 
 #slack_command {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   width: 400px;
   height: 30px;
 }
