@@ -9,15 +9,15 @@
     <div class="row">
       <div class="co-10 mx-auto">
         <h2 class="mt-4">宛先</h2>
-        <button class="btn btn-primary mr-1" @click="channelButton">#channel</button>
-        <button class="btn btn-primary mr-1" @click="someoneButton">@someone</button>
-        <button class="btn btn-primary mr-1" @click="meButton">me</button>
+        <button class="btn mr-1" @click="channelButton">#channel</button>
+        <button class="btn mr-1" @click="someoneButton">@someone</button>
+        <button class="btn mr-1" @click="meButton">me</button>
         <br>
         <div class="col-10 my-1 mt-3 mx-auto">
           <label class="sr-only" for="inlineFormInputGroupUsername">宛先</label>
           <div class="input-group">
             <div class="input-group-prepend">
-              <div class="input-group-text pr-3 pl-1" id="symbol">{{ symbol }}</div>
+              <div class="input-group-text pr-3" id="symbol">{{ symbol }}</div>
             </div>
             <input type="text" class="form-control" id="address" v-bind:placeholder="target" v-model="address">
           </div>
@@ -50,10 +50,10 @@
               </select>
               <div class="display_none from-group mt-2" id="every_week">
                 <div class="mt-3">
-                  <button class="btn btn-primary mr-1" @click="setOrdinaryDays">平日</button>
-                  <button class="btn btn-primary" @click="setHolidaty">土日</button>
+                  <button class="btn mr-1" @click="setOrdinaryDays">平日</button>
+                  <button class="btn" @click="setHolidaty">土日</button>
                 </div>
-                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay mt-3 mr-2">
+                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="week-of-day mt-3 mr-2">
                   <input
                     :id="'weekOfDay' + i"
                     :name="'weekOfDay' + i"
@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="display_none" id="every_other_week">
-                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="weekOfDay form-check form-check-inline mt-3">
+                <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="week-of-day form-check form-check-inline mt-3">
                   <input
                     class="form-check-input"
                     :id="'weekOfDayOption' + i"
@@ -91,9 +91,9 @@
               </div>
               <h2 class="mt-4">時間</h2>
               <div class="form-inline justify-content-center">
-                <select v-model="morningAfternoon" class="form-control col-2 mr-1 morningAfternoon">
-                  <option class="form-control" value="am">午前</option>
-                  <option class="form-control" value="pm">午後</option>
+                <select v-model="morningAfternoon" class="form-control col-2 mr-1 input-md">
+                  <option value="am">午前</option>
+                  <option value="pm">午後</option>
                 </select>
                 <input v-model="hour" class="form-control col-2 mr-1 text-center input-sm" id="repeat-hour" placeholder="00時">
                 <input v-model="minutue" class="form-control col-2 text-center input-sm" id="repeat-mimute" placeholder="00分">
@@ -118,7 +118,7 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-primary mt-4" id="create" @click="createButton">生成</button>
+    <button class="btn mt-4" id="create" @click="createButton">生成</button>
     <div class="row">
       <div class="col-10 mt-4 mb-5 mx-auto">
         <h3>Slack command</h3>
@@ -357,7 +357,7 @@ body {
 }
 
 #symbol {
-  width: 15px;
+  width: 35px;
   background: #d4d4d4;
 }
 
@@ -458,7 +458,7 @@ input[name="tab_item"] {
   height: 30px;
 }
 
-.weekOfDay {
+.week-of-day {
   display: inline-block;
 }
 </style>
