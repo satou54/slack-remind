@@ -48,7 +48,7 @@
                 <option value="毎月">毎月</option>
                 <option value="毎年">毎年</option>
               </select>
-              <div class="display_none from-group mt-2" id="every_week">
+              <div v-if="eachInterval.everyWeek" class="from-group mt-2" id="every_week">
                 <div class="mt-3">
                   <button class="btn mr-1" @click="setOrdinaryDays">平日</button>
                   <button class="btn" @click="setHolidaty">土日</button>
@@ -64,7 +64,7 @@
                   <label :for="'weekOfDay' + i">{{ weekOfDay }}</label>
                 </div>
               </div>
-              <div class="display_none" id="every_other_week">
+              <div v-if="eachInterval.everyOtherWeek" id="every_other_week">
                 <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="week-of-day form-check form-check-inline mt-3">
                   <input
                     class="form-check-input"
@@ -77,13 +77,13 @@
                   <label class="form-check-label" :for="'weekOfDayOption' + i">{{ weekOfDay }}</label>
                 </div>
               </div>
-              <div class="display_none mt-3" id="every_month">
+              <div v-if="eachInterval.everyMonth" class="mt-3" id="every_month">
                 <div class="form-inline justify-content-center">
                   <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day">
                   <p class="col-1 pl-1 mb-0" style="display:inline;">日</p>
                 </div>
               </div>
-              <div class="display_none mt-3" id="every_year">
+              <div v-if="eachInterval.everyYear" class="mt-3" id="every_year">
                 <div class="form-inline justify-content-center">
                   <input v-model="month" class="form-control col-4 text-center input-sm" placeholder="Month"><p class="col-1 pl-1  mb-0" style="display:inline;">月</p>
                   <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day"><p class="col-1 pl-1  mb-0" style="display:inline;">日</p>
@@ -141,6 +141,12 @@ export default {
       message: '',
       selectInterval: '',
       interval: '',
+      eachInterval: {
+        everyWeek: false,
+        everyOtherWeek: false,
+        everyMonth: false,
+        everyYear: false
+      },
       ordinaryDaysFlg: false,
       holidayFlg: false,
       weekOfDays: ['月', '火', '水', '木', '金', '土', '日'],
@@ -244,39 +250,31 @@ export default {
     selectChange: function () {
       this.selectedWeekOfDays = []
       if (this.selectInterval === '毎日') {
-        this.displayHide()
+        this.eachIntervalFlgFalse()
         this.interval = 'everyday'
       } else if (this.selectInterval === '毎週') {
-        this.displayChange('#every_week')
+        this.eachIntervalFlgFalse()
+        this.eachInterval.everyWeek = true
         this.interval = 'every weekday'
       } else if (this.selectInterval === '隔週') {
-        this.displayChange('#every_other_week')
+        this.eachIntervalFlgFalse()
+        this.eachInterval.everyOtherWeek = true
         this.interval = 'every other'
       } else if (this.selectInterval === '毎月') {
-        this.displayChange('#every_month')
+        this.eachIntervalFlgFalse()
+        this.eachInterval.everyMonth = true
         this.interval = 'every month'
       } else if (this.selectInterval === '毎年') {
-        this.displayChange('#every_year')
+        this.eachIntervalFlgFalse()
+        this.eachInterval.everyYear = true
         this.interval = 'every year'
       }
     },
-    // 引数に指定された要素を表示する
-    displayChange: function (id) {
-      this.displayHide()
-
-      var el = document.querySelector(id)
-      el.classList.remove('display_none')
-      el.classList.add('display_show')
-    },
-    // 既にリストで値が選択され表示されている要素が存在する場合、非表示にする
-    displayHide: function () {
-      if (document.querySelector('.display_show')) {
-        // display_showクラスを持つ要素のidを取得し#idの形にする
-        var displayShowId = '#' + document.querySelector('.display_show').getAttribute('id')
-        var displayShowElement = document.querySelector(displayShowId)
-        displayShowElement.classList.remove('display_show')
-        displayShowElement.classList.add('display_none')
-      }
+    eachIntervalFlgFalse: function () {
+      this.eachInterval.everyWeek = false
+      this.eachInterval.everyOtherWeek = false
+      this.eachInterval.everyMonth = false
+      this.eachInterval.everyYear = false
     },
     setOrdinaryDays: function () {
       const monday = document.getElementById('weekOfDay0')
