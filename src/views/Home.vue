@@ -2,8 +2,8 @@
   <div class="container mx-auto">
     <div class="row">
       <div class="col-10 mx-auto">
-        <h1 class="mt-5">Slack remind自動生成サイト</h1>
-        <p>Slackのremindコマンドを生成することができます。</p>
+        <h1 class="mt-5">Slack Remind Generater</h1>
+        <p>SlackのRemindコマンドを生成することができます。</p>
       </div>
     </div>
     <div class="row">
@@ -124,7 +124,7 @@
         <h3>Slack command</h3>
         <div class="form-inline justify-content-center">
           <input class="form-control col-8" id="slack_command" placeholder="Slack command" v-bind:value="command">
-          <button class="btn ml-1" @click="copyToClipboard">copy</button>
+          <button class="btn ml-1" id="copy-button" @click="copyToClipboard">copy</button>
         </div>
       </div>
     </div>
@@ -347,28 +347,27 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background: #340c34;
-}
-
 .container {
-  border: 2px solid #5ab4bd;
+  border: 2px solid #340c34;
   margin: 50px;
+  color: #340c34;
 }
 
 #symbol {
   width: 35px;
-  background: #d4d4d4;
+  background: #340c34;
+  color: #fff;
 }
 
 .btn {
-  background-color: #5ab4bd;
+  background-color: #340c34;
   color: #fff;
   border: none;
 }
 
 .btn:hover {
-  background-color: #5ab4bd;
+  background-color: #340c34;
+  color: #fff;
   opacity: 0.75;
 }
 
@@ -387,11 +386,11 @@ body {
   height: 40px;
   min-width: 80px;
   background-color: #d9d9d9;
-  border-bottom: 3px solid #5ab4bd;
+  border-bottom: 3px solid #340c34;
   line-height: 47px;
   font-size: 16px;
   text-align: center;
-  color: #565656;
+  color: #340c34;
   display: block;
   float: left;
   font-weight: bold;
@@ -423,7 +422,7 @@ input[name="tab_item"] {
 
 /*選択されているタブのスタイルを変える*/
 .tabs input:checked + .tab_item {
-  background-color: #5ab4bd;
+  background-color: #340c34;
   color: #fff;
 }
 
@@ -453,9 +452,12 @@ input[name="tab_item"] {
 
 #slack_command {
   margin-bottom: 10px;
-  margin-top: 10px;
   width: 400px;
   height: 30px;
+}
+
+#copy-button {
+  margin-bottom: 10px;
 }
 
 .week-of-day {
