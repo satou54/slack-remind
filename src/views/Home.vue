@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="row">
       <div class="col-10 mx-auto">
-        <h1>Slack remind自動生成サイト</h1>
+        <h1 class="mt-5">Slack remind自動生成サイト</h1>
         <p>Slackのremindコマンドを生成することができます。</p>
       </div>
     </div>
@@ -41,7 +41,7 @@
           <div class="tab_content" id="all_content">
             <div class="tab_content_description">
               <h2 class="mb-2">間隔</h2>
-              <select v-model="selectInterval" @change="selectChange" name="selectInterval" class="form-control col-3 mx-auto">
+              <select v-model="selectInterval" @change="selectChange" name="selectInterval" class="form-control col-3 mx-auto input-md">
                 <option value="毎日">毎日</option>
                 <option value="毎週">毎週</option>
                 <option value="隔週">隔週</option>
@@ -78,48 +78,40 @@
                 </div>
               </div>
               <div class="display_none mt-3" id="every_month">
-                <div class="form-inline">
-                  <div class="mx-auto">
-                    <input v-model="day" class="form-control col-4 text-center" placeholder="Day">
-                    <p class="col-1 pl-1" style="display:inline;">日</p>
-                  </div>
+                <div class="form-inline justify-content-center">
+                  <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day">
+                  <p class="col-1 pl-1 mb-0" style="display:inline;">日</p>
                 </div>
               </div>
               <div class="display_none mt-3" id="every_year">
-                <div class="form-inline">
-                  <div class="mx-auto">
-                    <input v-model="month" class="form-control col-4 text-center" placeholder="Month"><p class="col-1 pl-1" style="display:inline;">月</p>
-                    <input v-model="day" class="form-control col-4 text-center" placeholder="Day"><p class="col-1 pl-1" style="display:inline;">日</p>
-                  </div>
+                <div class="form-inline justify-content-center">
+                  <input v-model="month" class="form-control col-4 text-center input-sm" placeholder="Month"><p class="col-1 pl-1  mb-0" style="display:inline;">月</p>
+                  <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day"><p class="col-1 pl-1  mb-0" style="display:inline;">日</p>
                 </div>
               </div>
               <h2 class="mt-4">時間</h2>
-              <div class="form-inline">
-                <div class="mx-auto">
-                  <select v-model="morningAfternoon" class="form-control col-3 mr-1">
-                    <option class="form-control" value="am">午前</option>
-                    <option class="form-control" value="pm">午後</option>
-                  </select>
-                  <input v-model="hour" class="form-control col-3 mr-1 text-center" id="repeat-hour" placeholder="00時">
-                  <input v-model="minutue" class="form-control col-3 text-center" id="repeat-mimute" placeholder="00分">
-                </div>
+              <div class="form-inline justify-content-center">
+                <select v-model="morningAfternoon" class="form-control col-2 mr-1 morningAfternoon">
+                  <option class="form-control" value="am">午前</option>
+                  <option class="form-control" value="pm">午後</option>
+                </select>
+                <input v-model="hour" class="form-control col-2 mr-1 text-center input-sm" id="repeat-hour" placeholder="00時">
+                <input v-model="minutue" class="form-control col-2 text-center input-sm" id="repeat-mimute" placeholder="00分">
               </div>
             </div>
           </div>
           <div class="tab_content" id="programming_content">
             <div class="tab_content_description">
               <h2>日付</h2>
-              <input type="date" v-model="date" @change="changeDate" class="form-control col-6 mx-auto text-center">
+              <input type="date" v-model="date" @change="changeDate" class="form-control col-4 mx-auto text-center date">
               <h2 class="mt-4">時間</h2>
-              <div class="form-inline">
-                <div class="mx-auto">
-                  <select v-model="morningAfternoon" class="form-control col-3 mr-1">
-                    <option value="am">午前</option>
-                    <option value="pm">午後</option>
-                  </select>
-                  <input v-model="hour" class="form-control col-3 mr-1 text-center" id="once-hour" placeholder="00時">
-                  <input v-model="minutue" class="form-control col-3 mr-1 text-center" id="once-mimute" placeholder="00分">
-                </div>
+              <div class="form-inline justify-content-center">
+                <select v-model="morningAfternoon" class="form-control col-2 mr-1 input-md">
+                  <option value="am">午前</option>
+                  <option value="pm">午後</option>
+                </select>
+                <input v-model="hour" class="form-control col-2 mr-1 text-center input-sm" id="once-hour" placeholder="00時">
+                <input v-model="minutue" class="form-control col-2 mr-1 text-center input-sm" id="once-mimute" placeholder="00分">
               </div>
             </div>
           </div>
@@ -130,11 +122,9 @@
     <div class="row">
       <div class="col-10 mt-4 mb-5 mx-auto">
         <h3>Slack command</h3>
-        <div class="form-inline">
-          <div class="mx-auto">
-            <input class="form-control col-8" id="slack_command" placeholder="Slack command" v-bind:value="command">
-            <button class="btn ml-1" @click="copyToClipboard">copy</button>
-          </div>
+        <div class="form-inline justify-content-center">
+          <input class="form-control col-8" id="slack_command" placeholder="Slack command" v-bind:value="command">
+          <button class="btn ml-1" @click="copyToClipboard">copy</button>
         </div>
       </div>
     </div>
@@ -393,8 +383,9 @@ body {
 
 /*タブのスタイル*/
 .tab_item {
-  width: calc(100%/5);
+  width: calc(100%/4);
   height: 40px;
+  min-width: 80px;
   background-color: #d9d9d9;
   border-bottom: 3px solid #5ab4bd;
   line-height: 47px;
@@ -418,7 +409,7 @@ input[name="tab_item"] {
 /*タブ切り替えの中身のスタイル*/
 .tab_content {
   display: none;
-  padding: 20px 40px 0;
+  padding-top: 20px;
   clear: both;
   overflow: hidden;
 }
@@ -436,20 +427,24 @@ input[name="tab_item"] {
   color: #fff;
 }
 
+.input-sm {
+  min-width: 60px;
+}
+
+.input-md {
+  min-width: 80px;
+}
+
+.date {
+  min-width: 170px;
+}
+
 .display_show {
   display: block;
 }
 
 .display_none {
   display: none;
-}
-
-#hour {
-  width: 50px;
-}
-
-#minute {
-  width: 50px;
 }
 
 #create {
