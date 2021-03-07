@@ -185,7 +185,9 @@ export default {
       this.date = ''
     },
     createButton: function () {
-      this.command = this.createSlackCommand()
+      this.command = '/remind ' + this.address + ' "' + this.message + '" at ' +
+                      this.hour + ':' + this.minutue + this.morningAfternoon + ' ' +
+                      this.createSlackCommand()
     },
     createSlackCommand: function () {
       var command
@@ -199,7 +201,7 @@ export default {
             for (var i = 0; i < this.selectedWeekOfDays.length; i++) {
               command += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDays[i]) + ','
             }
-            command.slice(0, -1)
+            command = command.slice(0, command.length - 1)
           }
           break
         case 'every other':
@@ -228,7 +230,7 @@ export default {
         this.minutue = 0 + this.minutue
       }
 
-      return '/remind ' + this.address + ' "' + this.message + '" at ' + this.hour + ':' + this.minutue + this.morningAfternoon + ' ' + command
+      return command
     },
     weekOfDaysReplace: function (weekOfDay) {
       switch (weekOfDay) {
