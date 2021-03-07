@@ -79,14 +79,14 @@
               </div>
               <div v-if="eachInterval.everyMonth" class="mt-3" id="every_month">
                 <div class="form-inline justify-content-center">
-                  <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day">
-                  <p class="col-1 pl-1 mb-0" style="display:inline;">日</p>
+                  <input v-model="day" class="form-control col-2 text-center input-sm" placeholder="Day">
+                  <p class="col-1 px-0 mb-0" style="display:inline;">日</p>
                 </div>
               </div>
               <div v-if="eachInterval.everyYear" class="mt-3" id="every_year">
                 <div class="form-inline justify-content-center">
-                  <input v-model="month" class="form-control col-4 text-center input-sm" placeholder="Month"><p class="col-1 pl-1  mb-0" style="display:inline;">月</p>
-                  <input v-model="day" class="form-control col-4 text-center input-sm" placeholder="Day"><p class="col-1 pl-1  mb-0" style="display:inline;">日</p>
+                  <input v-model="month" class="form-control col-2 text-center input-sm" placeholder="Month"><p class="col-1 px-0 mb-0" style="display:inline;">月</p>
+                  <input v-model="day" class="form-control col-2 text-center input-sm" placeholder="Day"><p class="col-1 px-0 mb-0" style="display:inline;">日</p>
                 </div>
               </div>
               <h2 class="mt-4">時間</h2>
@@ -201,7 +201,7 @@ export default {
           }
           break
         case 'every other':
-          command = 'every other ' + this.weekOfDaysReplace(this.selectedWeekOfDay)
+          command = 'on every other ' + this.weekOfDaysReplace(this.selectedWeekOfDay)
           break
         case 'every month':
           command = 'on ' + this.day + ' every month'
