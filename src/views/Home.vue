@@ -187,7 +187,6 @@ export default {
     },
     createSlackCommand: function () {
       var command
-
       switch (this.interval) {
         case 'every weekday':
           if (this.selectedWeekOfDays.length === 7) {
@@ -338,8 +337,6 @@ export default {
       copyTarget.select()
       document.execCommand('Copy')
     }
-  },
-  computed: {
   }
 }
 </script>
