@@ -185,6 +185,7 @@ export default {
                       this.hour + ':' + this.minutue + this.morningAfternoon + ' ' +
                       this.createSlackCommand()
     },
+    // remindコマンドを作成
     createSlackCommand: function () {
       var command
       switch (this.interval) {
@@ -196,6 +197,7 @@ export default {
             for (var i = 0; i < this.selectedWeekOfDays.length; i++) {
               command += ' ' + this.weekOfDaysReplace(this.selectedWeekOfDays[i]) + ','
             }
+            // 最後の","を削除
             command = command.slice(0, command.length - 1)
           }
           break
@@ -227,6 +229,7 @@ export default {
 
       return command
     },
+    // 曜日を英語に変換
     weekOfDaysReplace: function (weekOfDay) {
       switch (weekOfDay) {
         case '月':
@@ -269,12 +272,14 @@ export default {
         this.interval = 'every year'
       }
     },
+    // 表示項目を非表示にする
     eachIntervalFlgFalse: function () {
       this.eachInterval.everyWeek = false
       this.eachInterval.everyOtherWeek = false
       this.eachInterval.everyMonth = false
       this.eachInterval.everyYear = false
     },
+    // 平日のボタンが選択された際の処理
     setOrdinaryDays: function () {
       const monday = document.getElementById('weekOfDay0')
       const tuesday = document.getElementById('weekOfDay1')
@@ -301,6 +306,7 @@ export default {
         this.selectedWeekOfDays = this.remodeArray(this.selectedWeekOfDays, ['土', '日'])
       }
     },
+    // 休日のボタンが選択された際の処理
     setHolidaty: function () {
       const saturday = document.getElementById('weekOfDay5')
       const sunday = document.getElementById('weekOfDay6')
@@ -318,6 +324,7 @@ export default {
         this.selectedWeekOfDays = this.remodeArray(this.selectedWeekOfDays, ['月', '火', '水', '木', '金'])
       }
     },
+    // 配列に指定された文字列を配列から削除する
     remodeArray: function (array, removeArray) {
       var newArray = []
       array = array.filter(function (value) {
