@@ -1,24 +1,11 @@
-# slack-remind
+# アプリ名： Slack Remind Generater
+https://slack-remind-command-generate.netlify.app/
 
-## Project setup
-```
-npm install
-```
+# どんなアプリか？
+Slackのリマインドを作成するアプリです。ボタンをクリックするだけで簡単にリマインドのコマンドを作成することができます。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# なぜ作ったのか？
+Slackでリマインド管理をする際に自動でリマインドコマンドを作れたら便利だと思ったため。
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 使用技術
+HTML/CSS/Vue.js/Netlify
