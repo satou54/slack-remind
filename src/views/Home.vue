@@ -65,6 +65,7 @@
                 </div>
               </div>
               <div v-if="eachInterval.everyOtherWeek" id="every_other_week">
+                <p class="mt-3 mb-0">隔週の場合は1日のみ選択することができます。</p>
                 <div v-for="(weekOfDay, i) in weekOfDays" :key="i" class="week-of-day form-check form-check-inline mt-3">
                   <input
                     class="form-check-input"
